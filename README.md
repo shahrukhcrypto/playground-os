@@ -8,12 +8,12 @@ Describe a game. Play it in 60 seconds.
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | System design, domain model, data flows |
-| [TECH_STACK.md](./TECH_STACK.md) | Technology choices and rationale |
-| [PROJECT_ROADMAP.md](./PROJECT_ROADMAP.md) | 12-month strategic roadmap |
-| [TASKS.md](./TASKS.md) | 3-month actionable milestones |
+| Document                                   | Description                             |
+| ------------------------------------------ | --------------------------------------- |
+| [ARCHITECTURE.md](./ARCHITECTURE.md)       | System design, domain model, data flows |
+| [TECH_STACK.md](./TECH_STACK.md)           | Technology choices and rationale        |
+| [PROJECT_ROADMAP.md](./PROJECT_ROADMAP.md) | 12-month strategic roadmap              |
+| [TASKS.md](./TASKS.md)                     | 3-month actionable milestones           |
 
 ---
 

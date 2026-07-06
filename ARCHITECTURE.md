@@ -12,14 +12,14 @@ Playground OS is an **AI-native game creation platform** where creators describe
 
 ### Design Principles
 
-| Principle | Description |
-|-----------|-------------|
-| **AI-first data model** | Game state is structured (ECS + scene graph) so agents can read, diff, and mutate it safely |
-| **Instant feedback** | Every change is previewable in seconds via hot-reload runtime |
-| **Progressive complexity** | Beginners get templates and prompts; experts get full ECS, scripting, and SDK access |
-| **Web-native** | Browser-first creation and play; no install required for creators or players |
-| **Composable services** | Monorepo with clear boundaries; services scale independently |
-| **Open extension** | Plugin SDK for custom systems, importers, and AI tools |
+| Principle                  | Description                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------- |
+| **AI-first data model**    | Game state is structured (ECS + scene graph) so agents can read, diff, and mutate it safely |
+| **Instant feedback**       | Every change is previewable in seconds via hot-reload runtime                               |
+| **Progressive complexity** | Beginners get templates and prompts; experts get full ECS, scripting, and SDK access        |
+| **Web-native**             | Browser-first creation and play; no install required for creators or players                |
+| **Composable services**    | Monorepo with clear boundaries; services scale independently                                |
+| **Open extension**         | Plugin SDK for custom systems, importers, and AI tools                                      |
 
 ---
 
@@ -124,7 +124,7 @@ interface Project {
   scenes: SceneRef[];
   assets: AssetRef[];
   settings: ProjectSettings;
-  version: number;           // Optimistic concurrency
+  version: number; // Optimistic concurrency
   createdAt: Date;
   updatedAt: Date;
 }
@@ -170,6 +170,7 @@ Operations are validated, applied atomically, and recorded in an **audit log** f
 ### 5.1 `apps/api` — Backend API
 
 **Responsibilities:**
+
 - Authentication (OAuth 2.0 / magic link)
 - Project CRUD and versioning
 - Asset upload presigned URLs
@@ -177,6 +178,7 @@ Operations are validated, applied atomically, and recorded in an **audit log** f
 - Webhook endpoints for CI/deploy
 
 **API surface (v1):**
+
 - `REST` — CRUD, file uploads, health
 - `GraphQL` — Studio queries (projects, scenes, assets)
 - `WebSocket` — delegated to `services/realtime`
@@ -184,17 +186,19 @@ Operations are validated, applied atomically, and recorded in an **audit log** f
 ### 5.2 `apps/studio` — Creator IDE (Phase 2+)
 
 **Responsibilities:**
+
 - Scene viewport (engine embed)
 - Hierarchy / inspector panels
 - AI chat sidebar with streaming
 - Asset browser
 - Play mode toggle
 
-*Not implemented in Phase 1 — folder scaffolded only.*
+_Not implemented in Phase 1 — folder scaffolded only._
 
 ### 5.3 `apps/playground` — Game Player
 
 **Responsibilities:**
+
 - Load published game bundles
 - Embed SDK for third-party sites
 - Fullscreen play mode
@@ -209,18 +213,21 @@ Public docs site generated from MDX + API reference.
 ## 6. Package Boundaries
 
 ### `packages/core`
+
 - Zod schemas for all domain types
 - `ProjectSnapshot` serialization
 - Event bus interfaces
 - No rendering or AI dependencies
 
 ### `packages/ecs`
+
 - World, Entity, Component stores
 - System scheduler (fixed + variable timestep)
 - Query API
 - Pure TypeScript — runs in Node (server validation) and browser
 
 ### `packages/engine`
+
 - WebGPU renderer (WebGL2 fallback)
 - 2D canvas path for lightweight games
 - Input, audio (Web Audio API)
@@ -228,6 +235,7 @@ Public docs site generated from MDX + API reference.
 - Hot-reload scene loader
 
 ### `packages/ai`
+
 - Agent definitions (planner, coder, artist)
 - Tool schemas bound to `AIOperation`
 - Prompt templates with project context injection
@@ -235,11 +243,13 @@ Public docs site generated from MDX + API reference.
 - Provider abstraction (OpenAI, Anthropic, local)
 
 ### `packages/assets`
+
 - GLTF/GLB, PNG, WAV, OGG import
 - Texture atlas generation
 - Asset manifest and CDN URL resolution
 
 ### `packages/sdk`
+
 - Plugin registration API
 - Custom component/system types
 - Lifecycle hooks
@@ -307,25 +317,27 @@ Client → API → AI Orchestrator → LLM Provider
 
 ## 9. Security Model
 
-| Layer | Approach |
-|-------|----------|
-| Auth | JWT access tokens + refresh; API keys for CI |
-| Authorization | RBAC: owner, editor, viewer per project |
-| AI scripts | Sandboxed Web Workers; no `eval` in main thread |
-| Uploads | Virus scan + MIME validation + size limits |
-| API | Rate limiting per user/IP; AI quota tiers |
+| Layer         | Approach                                        |
+| ------------- | ----------------------------------------------- |
+| Auth          | JWT access tokens + refresh; API keys for CI    |
+| Authorization | RBAC: owner, editor, viewer per project         |
+| AI scripts    | Sandboxed Web Workers; no `eval` in main thread |
+| Uploads       | Virus scan + MIME validation + size limits      |
+| API           | Rate limiting per user/IP; AI quota tiers       |
 
 ---
 
 ## 10. Deployment Topology
 
 ### Local Development
+
 ```
 docker compose up  →  Postgres, Redis, MinIO, API, services
 pnpm dev           →  Turborepo watches all packages
 ```
 
 ### Production (Phase 3+)
+
 ```
 Vercel/Cloudflare  →  Studio, Playground, Docs (static + edge)
 Fly.io / ECS       →  API, AI Orchestrator, Realtime
@@ -349,22 +361,22 @@ S3 + CDN           →  Assets and published bundles
 
 Significant decisions are recorded in `docs/adr/`:
 
-| ADR | Topic | Status |
-|-----|-------|--------|
-| ADR-001 | Monorepo with Turborepo + pnpm | Proposed |
-| ADR-002 | ECS + scene graph hybrid | Proposed |
-| ADR-003 | WebGPU-first rendering | Proposed |
+| ADR     | Topic                               | Status   |
+| ------- | ----------------------------------- | -------- |
+| ADR-001 | Monorepo with Turborepo + pnpm      | Proposed |
+| ADR-002 | ECS + scene graph hybrid            | Proposed |
+| ADR-003 | WebGPU-first rendering              | Proposed |
 | ADR-004 | Typed AI operations vs raw code gen | Proposed |
-| ADR-005 | PostgreSQL over document DB | Proposed |
+| ADR-005 | PostgreSQL over document DB         | Proposed |
 
 ---
 
 ## 13. Phase Boundaries
 
-| Phase | Focus | UI |
-|-------|-------|-----|
-| **Phase 1** (Month 1) | Core packages, ECS, engine skeleton, API | None |
-| **Phase 2** (Month 2) | AI orchestration, assets, realtime | Studio scaffold only |
-| **Phase 3** (Month 3) | Player, publish pipeline, Studio MVP | Studio MVP |
+| Phase                 | Focus                                    | UI                   |
+| --------------------- | ---------------------------------------- | -------------------- |
+| **Phase 1** (Month 1) | Core packages, ECS, engine skeleton, API | None                 |
+| **Phase 2** (Month 2) | AI orchestration, assets, realtime       | Studio scaffold only |
+| **Phase 3** (Month 3) | Player, publish pipeline, Studio MVP     | Studio MVP           |
 
 See [PROJECT_ROADMAP.md](./PROJECT_ROADMAP.md) and [TASKS.md](./TASKS.md) for detailed milestones.

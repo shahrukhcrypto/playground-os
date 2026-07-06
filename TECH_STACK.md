@@ -9,30 +9,30 @@ This document defines the approved technologies for Playground OS. Deviations re
 
 ## 1. Stack Overview
 
-| Layer | Technology | Rationale |
-|-------|------------|-----------|
-| Monorepo | **pnpm** + **Turborepo** | Fast installs, efficient caching, mature TS monorepo tooling |
-| Language | **TypeScript 5.x** (strict) | End-to-end type safety; shared types across client/server |
-| Runtime (server) | **Node.js 22 LTS** | Ecosystem, async I/O, shared language with browser |
-| Runtime (game) | **Browser** (WebGPU / WebGL2) | Zero-install play; broad reach |
-| API | **Fastify** + **GraphQL Yoga** | Performance, schema-first, plugin ecosystem |
-| Database | **PostgreSQL 16** | Relational integrity, JSONB for snapshots, mature |
-| Cache / Queue | **Redis 7** | Sessions, pub/sub, BullMQ job backend |
-| Object Storage | **S3-compatible** (MinIO local, AWS S3 prod) | Assets, bundles, uploads |
-| AI | **Vercel AI SDK** + provider plugins | Streaming, tool calling, multi-provider |
-| Realtime | **Socket.io** or **ws** + **Yjs** | Rooms, CRDT for collaborative editing |
-| Physics | **Rapier** (WASM) | Performant 3D/2D physics in browser |
-| Rendering | **WebGPU** (primary), **WebGL2** (fallback) | Modern GPU API; wide fallback |
-| 3D Assets | **glTF 2.0** / GLB | Industry standard, AI-friendly |
-| Validation | **Zod** | Runtime schemas shared with TypeScript types |
-| ORM | **Drizzle ORM** | Type-safe SQL, lightweight, good DX |
-| Auth | **Lucia** or **Clerk** (evaluated in Month 1) | Session management; Clerk for speed, Lucia for control |
-| Testing | **Vitest** + **Playwright** | Unit/integration + E2E |
-| Linting | **ESLint 9** (flat config) + **Prettier** | Consistent code style |
-| CI/CD | **GitHub Actions** | Native to repo hosting |
-| Containers | **Docker** + **Docker Compose** | Local dev parity |
-| IaC | **Terraform** (prod), Compose (dev) | Reproducible infrastructure |
-| Docs | **Fumadocs** or **Nextra** | MDX-based docs in `apps/docs` |
+| Layer            | Technology                                    | Rationale                                                    |
+| ---------------- | --------------------------------------------- | ------------------------------------------------------------ |
+| Monorepo         | **pnpm** + **Turborepo**                      | Fast installs, efficient caching, mature TS monorepo tooling |
+| Language         | **TypeScript 5.x** (strict)                   | End-to-end type safety; shared types across client/server    |
+| Runtime (server) | **Node.js 22 LTS**                            | Ecosystem, async I/O, shared language with browser           |
+| Runtime (game)   | **Browser** (WebGPU / WebGL2)                 | Zero-install play; broad reach                               |
+| API              | **Fastify** + **GraphQL Yoga**                | Performance, schema-first, plugin ecosystem                  |
+| Database         | **PostgreSQL 16**                             | Relational integrity, JSONB for snapshots, mature            |
+| Cache / Queue    | **Redis 7**                                   | Sessions, pub/sub, BullMQ job backend                        |
+| Object Storage   | **S3-compatible** (MinIO local, AWS S3 prod)  | Assets, bundles, uploads                                     |
+| AI               | **Vercel AI SDK** + provider plugins          | Streaming, tool calling, multi-provider                      |
+| Realtime         | **Socket.io** or **ws** + **Yjs**             | Rooms, CRDT for collaborative editing                        |
+| Physics          | **Rapier** (WASM)                             | Performant 3D/2D physics in browser                          |
+| Rendering        | **WebGPU** (primary), **WebGL2** (fallback)   | Modern GPU API; wide fallback                                |
+| 3D Assets        | **glTF 2.0** / GLB                            | Industry standard, AI-friendly                               |
+| Validation       | **Zod**                                       | Runtime schemas shared with TypeScript types                 |
+| ORM              | **Drizzle ORM**                               | Type-safe SQL, lightweight, good DX                          |
+| Auth             | **Lucia** or **Clerk** (evaluated in Month 1) | Session management; Clerk for speed, Lucia for control       |
+| Testing          | **Vitest** + **Playwright**                   | Unit/integration + E2E                                       |
+| Linting          | **ESLint 9** (flat config) + **Prettier**     | Consistent code style                                        |
+| CI/CD            | **GitHub Actions**                            | Native to repo hosting                                       |
+| Containers       | **Docker** + **Docker Compose**               | Local dev parity                                             |
+| IaC              | **Terraform** (prod), Compose (dev)           | Reproducible infrastructure                                  |
+| Docs             | **Fumadocs** or **Nextra**                    | MDX-based docs in `apps/docs`                                |
 
 ---
 
@@ -74,40 +74,40 @@ packages:
 
 ### `apps/api`
 
-| Concern | Choice |
-|---------|--------|
-| Framework | Fastify 5 |
-| GraphQL | GraphQL Yoga |
-| ORM | Drizzle + postgres.js |
-| Auth | Lucia (sessions in Postgres) |
+| Concern      | Choice                            |
+| ------------ | --------------------------------- |
+| Framework    | Fastify 5                         |
+| GraphQL      | GraphQL Yoga                      |
+| ORM          | Drizzle + postgres.js             |
+| Auth         | Lucia (sessions in Postgres)      |
 | File uploads | @fastify/multipart + S3 presigned |
-| API docs | Scalar (OpenAPI) |
+| API docs     | Scalar (OpenAPI)                  |
 
 ### `apps/studio` (Phase 2+)
 
-| Concern | Choice |
-|---------|--------|
-| Framework | Next.js 15 (App Router) |
-| State | Zustand + TanStack Query |
-| Styling | Tailwind CSS 4 |
+| Concern     | Choice                            |
+| ----------- | --------------------------------- |
+| Framework   | Next.js 15 (App Router)           |
+| State       | Zustand + TanStack Query          |
+| Styling     | Tailwind CSS 4                    |
 | 3D Viewport | `@playground/engine` canvas embed |
-| AI Chat | Vercel AI SDK `useChat` |
-| Icons | Lucide React |
+| AI Chat     | Vercel AI SDK `useChat`           |
+| Icons       | Lucide React                      |
 
 ### `apps/playground`
 
-| Concern | Choice |
-|---------|--------|
-| Framework | Vite 6 (SPA) |
-| Bundling | Rolldown / Vite for game bundles |
-| Embed | iframe SDK + postMessage API |
+| Concern   | Choice                           |
+| --------- | -------------------------------- |
+| Framework | Vite 6 (SPA)                     |
+| Bundling  | Rolldown / Vite for game bundles |
+| Embed     | iframe SDK + postMessage API     |
 
 ### `apps/docs`
 
-| Concern | Choice |
-|---------|--------|
-| Framework | Fumadocs + Next.js |
-| Content | MDX |
+| Concern       | Choice                                  |
+| ------------- | --------------------------------------- |
+| Framework     | Fumadocs + Next.js                      |
+| Content       | MDX                                     |
 | API Reference | Generated from GraphQL schema + OpenAPI |
 
 ---
@@ -128,35 +128,35 @@ packages:
 
 ### `packages/engine`
 
-| Subsystem | Library |
-|-----------|---------|
-| WebGPU | Custom thin wrapper + wgpu-matrix |
-| WebGL2 fallback | Regl or raw WebGL2 |
-| 2D | PixiJS 8 (evaluated) or custom canvas |
-| Audio | Web Audio API + howler.js (evaluated) |
-| Input | Custom unified pointer/keyboard/gamepad |
-| glTF loading | @gltf-transform/core + three.js loaders (evaluated) |
-| Shaders | WGSL (WebGPU), GLSL (WebGL2) |
+| Subsystem       | Library                                             |
+| --------------- | --------------------------------------------------- |
+| WebGPU          | Custom thin wrapper + wgpu-matrix                   |
+| WebGL2 fallback | Regl or raw WebGL2                                  |
+| 2D              | PixiJS 8 (evaluated) or custom canvas               |
+| Audio           | Web Audio API + howler.js (evaluated)               |
+| Input           | Custom unified pointer/keyboard/gamepad             |
+| glTF loading    | @gltf-transform/core + three.js loaders (evaluated) |
+| Shaders         | WGSL (WebGPU), GLSL (WebGL2)                        |
 
 ### `packages/ai`
 
-| Concern | Choice |
-|---------|--------|
-| SDK | Vercel AI SDK (`ai` package) |
-| Providers | `@ai-sdk/openai`, `@ai-sdk/anthropic` |
-| Tool schemas | Zod → JSON Schema for LLM tools |
-| Streaming | Server-Sent Events |
-| Embeddings | OpenAI `text-embedding-3-small` (RAG, Phase 2) |
-| Vector DB | pgvector extension on PostgreSQL (Phase 2) |
+| Concern      | Choice                                         |
+| ------------ | ---------------------------------------------- |
+| SDK          | Vercel AI SDK (`ai` package)                   |
+| Providers    | `@ai-sdk/openai`, `@ai-sdk/anthropic`          |
+| Tool schemas | Zod → JSON Schema for LLM tools                |
+| Streaming    | Server-Sent Events                             |
+| Embeddings   | OpenAI `text-embedding-3-small` (RAG, Phase 2) |
+| Vector DB    | pgvector extension on PostgreSQL (Phase 2)     |
 
 ### `packages/assets`
 
-| Format | Handling |
-|--------|----------|
-| glTF/GLB | @gltf-transform/functions |
-| Images | sharp (server), browser ImageBitmap (client) |
-| Audio | ffmpeg (server jobs), Web Audio (client) |
-| Sprites | Custom atlas packer |
+| Format   | Handling                                     |
+| -------- | -------------------------------------------- |
+| glTF/GLB | @gltf-transform/functions                    |
+| Images   | sharp (server), browser ImageBitmap (client) |
+| Audio    | ffmpeg (server jobs), Web Audio (client)     |
+| Sprites  | Custom atlas packer                          |
 
 ### `packages/sdk`
 
@@ -169,32 +169,32 @@ packages:
 
 ### `services/ai-orchestrator`
 
-| Concern | Choice |
-|---------|--------|
-| Runtime | Node.js 22 |
-| Framework | Fastify (lightweight HTTP for health/metrics) |
-| Queue | BullMQ on Redis |
-| LLM calls | Vercel AI SDK |
-| Observability | OpenTelemetry Node SDK |
+| Concern       | Choice                                        |
+| ------------- | --------------------------------------------- |
+| Runtime       | Node.js 22                                    |
+| Framework     | Fastify (lightweight HTTP for health/metrics) |
+| Queue         | BullMQ on Redis                               |
+| LLM calls     | Vercel AI SDK                                 |
+| Observability | OpenTelemetry Node SDK                        |
 
 ### `services/asset-processor`
 
-| Concern | Choice |
-|---------|--------|
-| Runtime | Node.js 22 |
-| Queue | BullMQ |
-| Image processing | sharp |
-| 3D optimization | gltf-transform, meshoptimizer |
-| Audio | fluent-ffmpeg |
+| Concern          | Choice                        |
+| ---------------- | ----------------------------- |
+| Runtime          | Node.js 22                    |
+| Queue            | BullMQ                        |
+| Image processing | sharp                         |
+| 3D optimization  | gltf-transform, meshoptimizer |
+| Audio            | fluent-ffmpeg                 |
 
 ### `services/realtime`
 
-| Concern | Choice |
-|---------|--------|
-| Transport | ws (native WebSocket) |
-| CRDT | Yjs |
-| Presence | Redis pub/sub |
-| Scaling | Redis adapter for multi-instance (Phase 3) |
+| Concern   | Choice                                     |
+| --------- | ------------------------------------------ |
+| Transport | ws (native WebSocket)                      |
+| CRDT      | Yjs                                        |
+| Presence  | Redis pub/sub                              |
+| Scaling   | Redis adapter for multi-instance (Phase 3) |
 
 ---
 
@@ -204,23 +204,23 @@ packages:
 
 ```yaml
 services:
-  postgres:   # PostgreSQL 16
-  redis:      # Redis 7
-  minio:      # S3-compatible storage
-  mailhog:    # Email testing (auth flows)
+  postgres: # PostgreSQL 16
+  redis: # Redis 7
+  minio: # S3-compatible storage
+  mailhog: # Email testing (auth flows)
 ```
 
 ### Production (Phase 3+)
 
-| Component | Provider (default) |
-|-----------|-------------------|
-| Frontend hosting | Vercel or Cloudflare Pages |
-| API / Services | Fly.io or AWS ECS Fargate |
-| Database | AWS RDS PostgreSQL |
-| Redis | Upstash or ElastiCache |
-| Storage | AWS S3 + CloudFront |
-| DNS / CDN | Cloudflare |
-| Secrets | AWS Secrets Manager or Doppler |
+| Component        | Provider (default)             |
+| ---------------- | ------------------------------ |
+| Frontend hosting | Vercel or Cloudflare Pages     |
+| API / Services   | Fly.io or AWS ECS Fargate      |
+| Database         | AWS RDS PostgreSQL             |
+| Redis            | Upstash or ElastiCache         |
+| Storage          | AWS S3 + CloudFront            |
+| DNS / CDN        | Cloudflare                     |
+| Secrets          | AWS Secrets Manager or Doppler |
 
 ### IaC
 
@@ -231,14 +231,15 @@ services:
 
 ## 7. AI Provider Strategy
 
-| Tier | Provider | Use Case |
-|------|----------|----------|
-| Primary | Anthropic Claude (Sonnet) | Complex reasoning, multi-step agents |
-| Secondary | OpenAI GPT-4o | Fallback, embeddings |
-| Fast | OpenAI GPT-4o-mini | Autocomplete, quick suggestions |
-| Local (future) | Ollama | Offline dev, privacy-sensitive |
+| Tier           | Provider                  | Use Case                             |
+| -------------- | ------------------------- | ------------------------------------ |
+| Primary        | Anthropic Claude (Sonnet) | Complex reasoning, multi-step agents |
+| Secondary      | OpenAI GPT-4o             | Fallback, embeddings                 |
+| Fast           | OpenAI GPT-4o-mini        | Autocomplete, quick suggestions      |
+| Local (future) | Ollama                    | Offline dev, privacy-sensitive       |
 
 **Cost controls:**
+
 - Per-user daily token budgets
 - Model routing by task complexity
 - Response caching for identical prompts (Redis)
@@ -247,13 +248,13 @@ services:
 
 ## 8. Testing Strategy
 
-| Level | Tool | Scope |
-|-------|------|-------|
-| Unit | Vitest | Packages, pure functions, ECS |
-| Integration | Vitest + testcontainers | API + DB |
-| E2E | Playwright | Studio flows (Phase 2+) |
-| Visual | Playwright screenshots | Engine rendering regressions |
-| Load | k6 (Phase 3) | API and realtime |
+| Level       | Tool                    | Scope                         |
+| ----------- | ----------------------- | ----------------------------- |
+| Unit        | Vitest                  | Packages, pure functions, ECS |
+| Integration | Vitest + testcontainers | API + DB                      |
+| E2E         | Playwright              | Studio flows (Phase 2+)       |
+| Visual      | Playwright screenshots  | Engine rendering regressions  |
+| Load        | k6 (Phase 3)            | API and realtime              |
 
 **Coverage target:** 80% on `packages/core`, `packages/ecs`, `packages/ai` tool validation.
 
@@ -270,14 +271,14 @@ services:
 
 ## 10. Explicitly Not Using (for now)
 
-| Technology | Reason |
-|------------|--------|
-| Unity / Unreal | Web-native goal; avoid native installs |
-| Electron | Browser-first; no desktop app in v1 |
-| MongoDB | Relational model fits projects/users; JSONB suffices |
-| GraphQL-only API | REST needed for uploads and webhooks |
-| Custom LLM fine-tuning | Premature; prompt engineering + RAG first |
-| Blockchain / NFTs | Out of scope |
+| Technology             | Reason                                               |
+| ---------------------- | ---------------------------------------------------- |
+| Unity / Unreal         | Web-native goal; avoid native installs               |
+| Electron               | Browser-first; no desktop app in v1                  |
+| MongoDB                | Relational model fits projects/users; JSONB suffices |
+| GraphQL-only API       | REST needed for uploads and webhooks                 |
+| Custom LLM fine-tuning | Premature; prompt engineering + RAG first            |
+| Blockchain / NFTs      | Out of scope                                         |
 
 ---
 
