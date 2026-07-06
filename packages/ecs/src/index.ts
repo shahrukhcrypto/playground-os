@@ -10,3 +10,8 @@ export * from './core/events.js';
 export * from './core/archetype.js';
 export * from './core/serialization.js';
 export * from './core/types.js';
+export * from "./Entity";
+export * from "./Component";
+export * from "./System";
+export * from "./World";
+export * from "./Query";
