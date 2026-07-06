@@ -1,1 +1,5 @@
-export interface Component {}
+import { Entity } from "./Entity";
+
+export abstract class Component {
+  constructor(public readonly entity: Entity) {}
+}
