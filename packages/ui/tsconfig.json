@@ -1,0 +1,10 @@
+{
+  "extends": "@playground/config/tsconfig/react",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowJs": true,
+    "rootDir": "."
+  },
+  "include": ["src", "eslint.config.js", "postcss.config.js", "tsup.config.ts"],
+  "exclude": ["node_modules", "dist"]
+}
