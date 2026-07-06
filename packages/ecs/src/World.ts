@@ -16,6 +16,18 @@ export class World {
     this.entities.delete(entity.id);
   }
 
+  hasEntity(entity: Entity): boolean {
+    return this.entities.has(entity.id);
+  }
+
+  getEntity(id: number): Entity | undefined {
+    return this.entities.get(id);
+  }
+
+  getEntities(): readonly Entity[] {
+    return [...this.entities.values()];
+  }
+
   addSystem(system: System): void {
     this.systems.push(system);
   }
@@ -24,9 +36,5 @@ export class World {
     for (const system of this.systems) {
       system.update(deltaTime);
     }
-  }
-
-  getEntities(): Entity[] {
-    return [...this.entities.values()];
   }
 }
