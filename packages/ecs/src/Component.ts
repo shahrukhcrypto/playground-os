@@ -1,5 +1,9 @@
 import { Entity } from "./Entity";
 
 export abstract class Component {
-  constructor(public readonly entity: Entity) {}
+  readonly entity: Entity;
+
+  protected constructor(entity: Entity) {
+    this.entity = entity;
+  }
 }
