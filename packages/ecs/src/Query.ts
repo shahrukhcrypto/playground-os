@@ -15,7 +15,15 @@ export class Query {
     return this.entities.has(entity);
   }
 
+  clear(): void {
+    this.entities.clear();
+  }
+
   getAll(): Entity[] {
     return [...this.entities];
+  }
+
+  get size(): number {
+    return this.entities.size;
   }
 }
