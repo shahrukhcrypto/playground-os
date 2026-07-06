@@ -1,0 +1,33 @@
+{
+  "name": "@playground/engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Production-grade engine core for Playground OS",
+  "license": "MIT",
+  "type": "module",
+  "prettier": "@playground/config/prettier",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "@playground/config": "workspace:*",
+    "@types/node": "^22.15.29",
+    "eslint": "^9.28.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}
