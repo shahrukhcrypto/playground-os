@@ -1,3 +1,21 @@
+# Playground OS
+.turbo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
 # Logs
 logs
 *.log

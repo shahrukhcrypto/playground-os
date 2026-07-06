@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+dist
+build
+.next
+out
+.output
+.turbo
+coverage
+
+# Lockfiles
+pnpm-lock.yaml
+
+# Generated
+*.min.js
+*.min.css
+
+# Misc
+.git

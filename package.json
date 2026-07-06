@@ -1,0 +1,31 @@
+{
+  "name": "playground-os",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI-Native Game Creation Platform",
+  "license": "MIT",
+  "author": "shahrukhcrypto",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shahrukhcrypto/playground-os.git"
+  },
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@10.12.4",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "clean": "turbo run clean"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.4"
+  }
+}
